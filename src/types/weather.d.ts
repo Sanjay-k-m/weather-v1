@@ -1,5 +1,4 @@
-// Weather API Response Type
-export interface WeatherResponse {
+export interface GetWeatherResponse {
   latitude: number;
   longitude: number;
   generationtime_ms: number;
@@ -13,19 +12,21 @@ export interface WeatherResponse {
     interval: string; // "seconds"
     temperature_2m: string; // "°C"
     rain: string; // "mm"
-    is_day: string; // "" (empty string, meaning boolean 0/1 in `current`)
+    is_day: string; // "" (0/1 boolean)
     relative_humidity_2m: string; // "%"
     wind_speed_10m: string; // "km/h"
+    snowfall: string; // "cm" or "mm"
   };
 
   current: {
-    time: string; // e.g. "2025-08-30T10:30"
-    interval: number; // seconds
+    time: string; // ISO string, e.g. "2025-08-30T10:30:00Z"
+    interval: number;
     temperature_2m: number;
     rain: number;
     is_day: number; // 1 = day, 0 = night
     relative_humidity_2m: number;
     wind_speed_10m: number;
+    snowfall: number;
   };
 
   hourly_units: {
@@ -34,7 +35,16 @@ export interface WeatherResponse {
   };
 
   hourly: {
-    time: string[];
-    temperature_2m: number[];
+    time: string[];        // array of ISO strings
+    temperature_2m: number[]; // array of values (converted from Float32Array)
   };
+}
+
+
+
+
+export interface WeatherRequest
+ {
+  latitude: number;
+  longitude: number;
 }
